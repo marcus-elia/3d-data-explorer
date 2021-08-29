@@ -19,8 +19,8 @@ public class Manager : MonoBehaviour
         playerTransform = Camera.main.transform;
 
         Data[] sampleData = new Data[3];
-        sampleData[0] = new Data(123);
-        sampleData[1] = new Data(5);
+        sampleData[0] = new Data(1234);
+        sampleData[1] = new Data(55555);
         sampleData[2] = new Data(-4);
 
         testArray = new GameObject();

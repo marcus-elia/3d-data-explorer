@@ -72,7 +72,9 @@ public class DataText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.transform.LookAt(playerTransform);
+        // Make the text face the player, but calling transform.lookAt makes it backwards.
+        // This fix is from https://answers.unity.com/questions/132592/lookat-in-opposite-direction.html
+        text.transform.rotation = Quaternion.LookRotation(text.transform.position - playerTransform.position);
     }
 
     public void SetPlayerTransform(Transform input)
@@ -90,18 +92,19 @@ public class DataText : MonoBehaviour
     private void UpdateTextMesh()
     {
         numCharacters = dataString.Length;
-        float characterSize;
-        if(numCharacters == 0)
+        text.text = dataString;
+        if(numCharacters < 4)
         {
-            characterSize = 0f;
+            text.fontSize = 6;
+        }
+        else if(numCharacters == 4)
+        {
+            text.fontSize = 5;
         }
         else
         {
-            characterSize = maxTextWidth / numCharacters;
+            text.fontSize = 4;
         }
-        fontSize = Mathf.FloorToInt(10*characterSize);
-        text.text = dataString;
-        text.fontSize = fontSize;
     }
 
     public void InitializeText()
@@ -110,6 +113,5 @@ public class DataText : MonoBehaviour
         text.transform.SetParent(transform);
         text.transform.localPosition = Vector3.zero;
         text.alignment = TextAlignmentOptions.Center;
-        text.transform.LookAt(playerTransform);
     }
 }

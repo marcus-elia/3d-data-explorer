@@ -3,12 +3,58 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum DataType { Int, Float, String };
+
+public struct Data
+{
+    public int intData;
+    public float floatData;
+    public string stringData;
+    public DataType dataType;
+
+    public Data(int input)
+    {
+        intData = input;
+        floatData = 0f;
+        stringData = null;
+        dataType = DataType.Int;
+    }
+    public Data(float input)
+    {
+        intData = 0;
+        floatData = input;
+        stringData = null;
+        dataType = DataType.Float;
+    }
+    public Data(string input)
+    {
+        intData = 0;
+        floatData = 0f;
+        stringData = input;
+        dataType = DataType.String;
+    }
+
+    public string GetString()
+    {
+        if(dataType == DataType.Int)
+        {
+            return intData.ToString();
+        }
+        else if(dataType == DataType.Float)
+        {
+            return floatData.ToString();
+        }
+        else
+        {
+            return stringData;
+        }
+    }
+}
+
 public class DataText : MonoBehaviour
 {
     private TextMeshPro text;
-    private int intData = 0;
-    private float floatData = 0f;
-    private string stringData = null;
+    private Data data;
     private string dataString = "";
 
     private int fontSize;
@@ -34,22 +80,10 @@ public class DataText : MonoBehaviour
         playerTransform = input;
     }
 
-    public void SetData(int input)
+    public void SetData(Data inputData)
     {
-        intData = input;
-        dataString = intData.ToString();
-        UpdateTextMesh();
-    }
-    public void SetData(float input)
-    {
-        floatData = input;
-        dataString = floatData.ToString();
-        UpdateTextMesh();
-    }
-    public void SetData(string input)
-    {
-        stringData = input;
-        dataString = stringData;
+        data = inputData;
+        dataString = data.GetString();
         UpdateTextMesh();
     }
 

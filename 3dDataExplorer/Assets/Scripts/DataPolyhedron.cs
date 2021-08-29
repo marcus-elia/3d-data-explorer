@@ -48,27 +48,12 @@ public class DataPolyhedron : MonoBehaviour
         return z;
     }
 
-    // Three versions of this since the data could be int, float, or string
-    public void InitializeText(int input)
+    public void InitializeText(Data inputData)
     {
         text = new GameObject();
         text.AddComponent<DataText>();
         text.transform.SetParent(transform);
-        text.GetComponent<DataText>().SetData(input);
-    }
-    public void InitializeText(float input)
-    {
-        text = new GameObject();
-        text.AddComponent<DataText>();
-        text.transform.SetParent(transform);
-        text.GetComponent<DataText>().SetData(input);
-    }
-    public void InitializeText(string input)
-    {
-        text = new GameObject();
-        text.AddComponent<DataText>();
-        text.transform.SetParent(transform);
-        text.GetComponent<DataText>().SetData(input);
+        text.GetComponent<DataText>().SetData(inputData);
     }
 
     public void SetMaterials(Material inputMat, Material inputHighlightMat)

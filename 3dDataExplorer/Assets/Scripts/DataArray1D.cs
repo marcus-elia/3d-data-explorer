@@ -7,9 +7,6 @@ public class DataArray1D : MonoBehaviour
     // This stores the DataPolyhedron objects
     private GameObject[] array;
 
-    // The distance between the centers of two adjacent data
-    public static float offsetBetweenEntries = 2f;
-
     // This is a horizontal row of a rectangular prism of data. So it needs to know its
     // y and z incides of where it is within the prism.
     private int y, z;
@@ -40,11 +37,11 @@ public class DataArray1D : MonoBehaviour
         float curDataLoc;
         if(data.Length % 2 == 0)
         {
-            curDataLoc = -offsetBetweenEntries * (0.5f + data.Length / 2f);
+            curDataLoc = -Manager.offsetBetweenEntries * (data.Length / 2f - 0.5f);
         }
         else
         {
-            curDataLoc = -offsetBetweenEntries * (data.Length / 2f);
+            curDataLoc = -Manager.offsetBetweenEntries * (data.Length / 2f - 0.5f);
         }
 
         // Put all of the data in the correct positions and initialize them
@@ -59,7 +56,7 @@ public class DataArray1D : MonoBehaviour
             dataEntry.GetComponent<DataPolyhedron>().InitializeText(data[i]);
             dataEntry.GetComponent<DataPolyhedron>().SetIndices(i, this.y, this.z);
 
-            curDataLoc += offsetBetweenEntries;
+            curDataLoc += Manager.offsetBetweenEntries;
         }
     }
 }

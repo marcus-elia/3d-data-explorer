@@ -59,7 +59,7 @@ public class DataText : MonoBehaviour
 
     private int fontSize;
     private int numCharacters;
-    private float maxTextWidth;
+    private static float maxTextWidth = 0.9f;
 
     private Transform playerTransform;
 
@@ -90,16 +90,26 @@ public class DataText : MonoBehaviour
     private void UpdateTextMesh()
     {
         numCharacters = dataString.Length;
-        float characterSize = numCharacters / maxTextWidth;
-        fontSize = Mathf.FloorToInt(characterSize);
+        float characterSize;
+        if(numCharacters == 0)
+        {
+            characterSize = 0f;
+        }
+        else
+        {
+            characterSize = maxTextWidth / numCharacters;
+        }
+        fontSize = Mathf.FloorToInt(10*characterSize);
         text.text = dataString;
         text.fontSize = fontSize;
     }
 
     public void InitializeText()
     {
-        text = new TextMeshPro();
+        text = gameObject.AddComponent<TextMeshPro>();
         text.transform.SetParent(transform);
+        text.transform.localPosition = Vector3.zero;
+        text.alignment = TextAlignmentOptions.Center;
         text.transform.LookAt(playerTransform);
     }
 }

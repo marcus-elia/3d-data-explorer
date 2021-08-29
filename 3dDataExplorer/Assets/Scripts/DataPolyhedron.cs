@@ -53,7 +53,10 @@ public class DataPolyhedron : MonoBehaviour
         text = new GameObject();
         text.AddComponent<DataText>();
         text.transform.SetParent(transform);
+        text.transform.localPosition = Vector3.zero;
+        text.GetComponent<DataText>().InitializeText();
         text.GetComponent<DataText>().SetData(inputData);
+        text.GetComponent<DataText>().SetPlayerTransform(Manager.playerTransform);
     }
 
     public void SetMaterials(Material inputMat, Material inputHighlightMat)
@@ -66,6 +69,7 @@ public class DataPolyhedron : MonoBehaviour
     {
         shell = Instantiate(shapePrefab);
         shell.transform.SetParent(transform);
+        shell.transform.localPosition = Vector3.zero;
         shell.GetComponent<Renderer>().material = normalMat;
     }
 

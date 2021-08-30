@@ -5,8 +5,17 @@ using UnityEngine;
 public class Manager : MonoBehaviour
 {
     public Material normalMat;
+    public Material hoverMat;
     public Material highlightMat;
     public GameObject cubePrefab;
+    // Need the camera for raycasting
+    public new Camera camera;
+
+    // Keep track of datas that are highlighted
+    private DataPolyhedron hovered;
+    private GameObject highlighted1;
+    private GameObject highlighted2;
+    private GameObject highlighted3;
 
     // The distance between the centers of two adjacent data
     public static float offsetBetweenEntries = 2f;
@@ -30,12 +39,29 @@ public class Manager : MonoBehaviour
 
         testArray = new GameObject();
         testArray.AddComponent<DataArray3D>();
-        testArray.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, highlightMat, cubePrefab);
+        testArray.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, cubePrefab);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Raycast();
+    }
+
+    public void Raycast()
+    {
+        RaycastHit hit;
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            // This is my annoying hack to get the DataPolyhedron from the prefab
+            DataPolyhedron dp = hit.collider.gameObject.GetComponent<ReferenceToPolyhedron>().GetPolyhedron();
+            if(hovered != null)
+            {
+                hovered.UnHighlight();
+            }
+            dp.Hover();
+            hovered = dp;
+        }
     }
 }

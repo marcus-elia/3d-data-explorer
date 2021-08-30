@@ -12,7 +12,11 @@ public class DataPolyhedron : MonoBehaviour
 
     // Materials
     private Material normalMat;
+    private Material hoverMat;
     private Material highlightMat;
+
+    private bool isHovered = false;
+    private bool isHighlighted = false;
 
     // Keep track of where this is in the array
     private int x, y, z;
@@ -59,9 +63,10 @@ public class DataPolyhedron : MonoBehaviour
         text.GetComponent<DataText>().SetPlayerTransform(Manager.playerTransform);
     }
 
-    public void SetMaterials(Material inputMat, Material inputHighlightMat)
+    public void SetMaterials(Material inputMat, Material inputHoverMat, Material inputHighlightMat)
     {
         normalMat = inputMat;
+        hoverMat = inputHoverMat;
         highlightMat = inputHighlightMat;
     }
 
@@ -71,14 +76,36 @@ public class DataPolyhedron : MonoBehaviour
         shell.transform.SetParent(transform);
         shell.transform.localPosition = Vector3.zero;
         shell.GetComponent<Renderer>().material = normalMat;
+
+        // This is the hack to get the DataPolyhedron when a raycast hits the prefab's collider
+        shell.GetComponent<ReferenceToPolyhedron>().SetPolyhedron(this);
     }
 
     public void Highlight()
     {
         shell.GetComponent<Renderer>().material = highlightMat;
+        isHighlighted = true;
+        isHovered = false;
     }
     public void UnHighlight()
     {
         shell.GetComponent<Renderer>().material = normalMat;
+        isHighlighted = false;
+        isHovered = true;
+    }
+    public void Hover()
+    {
+        shell.GetComponent<Renderer>().material = hoverMat;
+        isHovered = true;
+    }
+
+    // Getters
+    public bool IsHighlighted()
+    {
+        return isHighlighted;
+    }
+    public bool IsHovered()
+    {
+        return isHovered;
     }
 }

@@ -19,7 +19,7 @@ public class DataArray3D : MonoBehaviour
 
     }
 
-    public void InitializeData(Data[][][] data, Material normalMat, Material highlightMat, GameObject shellPrefab)
+    public void InitializeData(Data[][][] data, Material normalMat, Material hoverMat, Material highlightMat, GameObject shellPrefab)
     {
         array = new GameObject[data.Length];
 
@@ -42,7 +42,7 @@ public class DataArray3D : MonoBehaviour
             dataArray2d.transform.localPosition = new Vector3(0, 0, curDataLoc);
             dataArray2d.AddComponent<DataArray2D>();
             dataArray2d.GetComponent<DataArray2D>().SetIndex(i);
-            dataArray2d.GetComponent<DataArray2D>().InitializeData(data[i], normalMat, highlightMat, shellPrefab);
+            dataArray2d.GetComponent<DataArray2D>().InitializeData(data[i], normalMat, hoverMat, highlightMat, shellPrefab);
 
             curDataLoc += Manager.offsetBetweenEntries;
         }

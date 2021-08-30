@@ -29,7 +29,7 @@ public class DataArray1D : MonoBehaviour
         z = inputZ;
     }
 
-    public void InitializeData(Data[] data, Material normalMat, Material highlightMat, GameObject shellPrefab)
+    public void InitializeData(Data[] data, Material normalMat, Material hoverMat, Material highlightMat, GameObject shellPrefab)
     {
         array = new GameObject[data.Length];
 
@@ -51,7 +51,7 @@ public class DataArray1D : MonoBehaviour
             dataEntry.transform.SetParent(transform);
             dataEntry.transform.localPosition = new Vector3(curDataLoc, 0, 0);
             dataEntry.AddComponent<DataPolyhedron>();
-            dataEntry.GetComponent<DataPolyhedron>().SetMaterials(normalMat, highlightMat);
+            dataEntry.GetComponent<DataPolyhedron>().SetMaterials(normalMat, hoverMat, highlightMat);
             dataEntry.GetComponent<DataPolyhedron>().SetShellPrefab(shellPrefab);
             dataEntry.GetComponent<DataPolyhedron>().InitializeText(data[i]);
             dataEntry.GetComponent<DataPolyhedron>().SetIndices(i, this.y, this.z);

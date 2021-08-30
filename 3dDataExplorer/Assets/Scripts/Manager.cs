@@ -26,10 +26,11 @@ public class Manager : MonoBehaviour
         sampleData[1] = new Data[4] { new Data(111), new Data(67), new Data(-9.8f), new Data("hey") };
         sampleData[2] = new Data[1] { new Data(3.14f) };
 
+        Data[][][] triangles = DataCreator.MakeTriangleData(6, 5);
+
         testArray = new GameObject();
-        testArray.AddComponent<DataArray2D>();
-        testArray.GetComponent<DataArray2D>().SetIndex(0);
-        testArray.GetComponent<DataArray2D>().InitializeData(sampleData, normalMat, highlightMat, cubePrefab);
+        testArray.AddComponent<DataArray3D>();
+        testArray.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, highlightMat, cubePrefab);
     }
 
     // Update is called once per frame

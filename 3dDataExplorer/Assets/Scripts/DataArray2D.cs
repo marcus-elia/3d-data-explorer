@@ -36,11 +36,11 @@ public class DataArray2D : MonoBehaviour
         float curDataLoc;
         if (data.Length % 2 == 0)
         {
-            curDataLoc = Manager.offsetBetweenEntries * (0.5f + data.Length / 2f);
+            curDataLoc = Manager.offsetBetweenEntries * (data.Length / 2f - 0.5f);
         }
         else
         {
-            curDataLoc = Manager.offsetBetweenEntries * (data.Length / 2f);
+            curDataLoc = Manager.offsetBetweenEntries * (data.Length / 2f - 0.5f);
         }
 
         // Put all of the data in the correct positions and initialize them

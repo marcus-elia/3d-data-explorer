@@ -48,6 +48,6 @@ public class DataCreator : MonoBehaviour
         {
             return 1;
         }
-        return T(b, n - 1, k) + (n + b - 2) * T(b, n - 1, k + 1);
+        return T(b, n - 1, k - 1) + (k + b - 2)* (k + b - 2) * T(b, n - 1, k);
     }
 }

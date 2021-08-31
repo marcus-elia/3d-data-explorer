@@ -92,6 +92,13 @@ public class Manager : MonoBehaviour
                 hovered.Highlight();
                 highlighted = hovered;
             }
+            // If only one is highlighted and the user clicks on it
+            else if(hovered == highlighted)
+            {
+                highlighted.UnHighlight();
+                highlighted.Hover();
+                highlighted = null;
+            }
             // Otherwise, one is already highlighted, and this is the other.
             // Highlight the line containing them.
             else

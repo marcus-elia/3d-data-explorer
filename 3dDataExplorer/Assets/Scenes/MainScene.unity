@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1.7020017, g: 1.8212502, b: 2.070588, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 2aebeaac32c21c44b8d3a6ab90354426, type: 2}
   m_HaloStrength: 0.5
@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalMat: {fileID: 2100000, guid: cd7e6c93b38be5f4ead73a94befd8ea2, type: 2}
-  hoverMat: {fileID: 2100000, guid: 7f34c86563775e84092fda8f6f9c5f21, type: 2}
-  highlightMat: {fileID: 2100000, guid: c15d7eb39df37f242848758c672bf95e, type: 2}
+  hoverMat: {fileID: 2100000, guid: ad2a96c5271f6fe49a0e67b9ee80b933, type: 2}
+  highlightMat: {fileID: 2100000, guid: 92daaa4870b0f0e45a68b1f1bf3f35d9, type: 2}
   cubePrefab: {fileID: 9101842642606899036, guid: 0178ab2c41c9f59449ff84b3351bfc19, type: 3}
   camera: {fileID: 963194227}
 --- !u!4 &695889436
@@ -187,7 +187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0

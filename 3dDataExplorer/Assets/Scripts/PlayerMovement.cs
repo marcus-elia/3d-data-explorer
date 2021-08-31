@@ -35,5 +35,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.up*y + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
+
+        // Double speed when left control
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            controller.Move(move * speed * Time.deltaTime);
+        }
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
+    public static float HIGHLIGHT_LINE_TOLERANCE = 0.01f;
+
     public Material normalMat;
     public Material hoverMat;
     public Material highlightMat;
@@ -13,9 +15,8 @@ public class Manager : MonoBehaviour
 
     // Keep track of datas that are highlighted
     private DataPolyhedron hovered;
-    private GameObject highlighted1;
-    private GameObject highlighted2;
-    private GameObject highlighted3;
+    private DataPolyhedron highlighted;
+    private bool lineIsHighlighted = false;
 
     // The distance between the centers of two adjacent data
     public static float offsetBetweenEntries = 2f;
@@ -23,7 +24,8 @@ public class Manager : MonoBehaviour
     // Keep track of this so the data text can always face the camera
     public static Transform playerTransform;
 
-    private GameObject testArray;
+    // This is where all the stuff is
+    private GameObject mainArray3d;
 
     // Start is called before the first frame update
     void Start()
@@ -37,15 +39,16 @@ public class Manager : MonoBehaviour
 
         Data[][][] triangles = DataCreator.MakeTriangleData(6, 5);
 
-        testArray = new GameObject();
-        testArray.AddComponent<DataArray3D>();
-        testArray.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, cubePrefab);
+        mainArray3d = new GameObject();
+        mainArray3d.AddComponent<DataArray3D>();
+        mainArray3d.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, cubePrefab);
     }
 
     // Update is called once per frame
     void Update()
     {
         Raycast();
+        ReactToClick();
     }
 
     public void Raycast()
@@ -56,12 +59,120 @@ public class Manager : MonoBehaviour
         {
             // This is my annoying hack to get the DataPolyhedron from the prefab
             DataPolyhedron dp = hit.collider.gameObject.GetComponent<ReferenceToPolyhedron>().GetPolyhedron();
-            if(hovered != null)
+            if (hovered != null && !hovered.IsHighlighted())
             {
                 hovered.UnHighlight();
             }
-            dp.Hover();
+            if(!dp.IsHighlighted())
+            {
+                dp.Hover();
+            }
             hovered = dp;
         }
+    }
+
+    public void ReactToClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // If a line is already highlighted, unhighlight it
+            if(this.lineIsHighlighted)
+            {
+                this.UnHighlightAll();
+                highlighted = null;
+            }
+            // If not looking at a polyhedron, do nothing
+            if (hovered == null)
+            {
+                return;
+            }
+            // If nothing is highlighted, highlight this
+            else if (highlighted == null)
+            {
+                hovered.Highlight();
+                highlighted = hovered;
+            }
+            // Otherwise, one is already highlighted, and this is the other.
+            // Highlight the line containing them.
+            else
+            {
+                this.HighlightLineBetween(hovered, highlighted);
+                this.lineIsHighlighted = true;
+            }
+        }
+    }
+
+    public void UnHighlightAll()
+    {
+        mainArray3d.GetComponent<DataArray3D>().UnHighlightAll();
+        this.lineIsHighlighted = false;
+    }
+
+    // This function is based on an old project I did
+    // https://github.com/marcus-elia/integer-sequence-polyhedron/blob/master/numberCubePolyhedron.cpp
+    public void HighlightLineBetween(DataPolyhedron dp1, DataPolyhedron dp2)
+    {
+        int x1 = dp1.GetX(), y1 = dp1.GetY(), z1 = dp1.GetZ();
+        int x2 = dp2.GetX(), y2 = dp2.GetY(), z2 = dp2.GetZ();
+
+        // If the two are in the same plane
+        if(z1 == z2)
+        {
+            DataArray2D da2 = mainArray3d.GetComponent<DataArray3D>().GetArrayAtZ(z1).GetComponent<DataArray2D>();
+            // Vertical line
+            if (x1 == x2)
+            {
+                for (int y = 0; y < da2.Length(); y++)
+                {
+                    DataArray1D da1 = da2.GetArrayAtY(y).GetComponent<DataArray1D>();
+                    if (da1.Length() > x1)
+                    {
+                        da1.GetDataPolyhedronAtX(x1).GetComponent<DataPolyhedron>().Highlight();
+                    }
+                }
+            }
+            // Non-vertical line
+            else
+            {
+                float slope = (y2 - y1) / (float)(x2 - x1);
+                float yInt = y1 - slope * x1;
+                for (int y = 0; y < da2.Length(); y++)
+                {
+                    DataArray1D da1 = da2.GetArrayAtY(y).GetComponent<DataArray1D>();
+                    for (int x = 0; x < da1.Length(); x++)
+                    {
+                        // Check if the coordinates lie on the line
+                        if (Mathf.Abs(slope * x + yInt - y) < 0.01)
+                        {
+                            da1.GetDataPolyhedronAtX(x).GetComponent<DataPolyhedron>().Highlight();
+                        }
+                    }
+                }
+            }
+        }
+        else  // The line goes across tables
+        {
+            // We will view both x and y as linear functions of z
+            float xSlope = (x2 - x1) / (float)(z2 - z1);
+            float xInt = x1 - xSlope * z1;
+            float ySlope = (y2 - y1) / (float)(z2 - z1);
+            float yInt = y1 - ySlope * z1;
+            for (int z = 0; z < mainArray3d.GetComponent<DataArray3D>().Length(); z++)
+            {
+                DataArray2D da2 = mainArray3d.GetComponent<DataArray3D>().GetArrayAtZ(z).GetComponent<DataArray2D>();
+                for (int y = 0; y < da2.Length(); y++)
+                {
+                    DataArray1D da1 = da2.GetArrayAtY(y).GetComponent<DataArray1D>();
+                    for (int x = 0; x < da1.Length(); x++)
+                    {
+                        if (Mathf.Abs(xSlope * z + xInt - x) < HIGHLIGHT_LINE_TOLERANCE && Mathf.Abs(ySlope * z + yInt - y) < HIGHLIGHT_LINE_TOLERANCE)
+                        {
+                            da1.GetDataPolyhedronAtX(x).GetComponent<DataPolyhedron>().Highlight();
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

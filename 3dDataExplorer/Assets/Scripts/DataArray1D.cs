@@ -55,8 +55,27 @@ public class DataArray1D : MonoBehaviour
             dataEntry.GetComponent<DataPolyhedron>().SetShellPrefab(shellPrefab);
             dataEntry.GetComponent<DataPolyhedron>().InitializeText(data[i]);
             dataEntry.GetComponent<DataPolyhedron>().SetIndices(i, this.y, this.z);
+            array[i] = dataEntry;
 
             curDataLoc += Manager.offsetBetweenEntries;
+        }
+    }
+
+    public GameObject GetDataPolyhedronAtX(int x)
+    {
+        return array[x];
+    }
+
+    public int Length()
+    {
+        return array.Length;
+    }
+
+    public void UnHighlightAll()
+    {
+        foreach (GameObject dp in array)
+        {
+            dp.GetComponent<DataPolyhedron>().UnHighlight();
         }
     }
 }

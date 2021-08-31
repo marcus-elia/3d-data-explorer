@@ -43,8 +43,27 @@ public class DataArray3D : MonoBehaviour
             dataArray2d.AddComponent<DataArray2D>();
             dataArray2d.GetComponent<DataArray2D>().SetIndex(i);
             dataArray2d.GetComponent<DataArray2D>().InitializeData(data[i], normalMat, hoverMat, highlightMat, shellPrefab);
+            array[i] = dataArray2d;
 
             curDataLoc += Manager.offsetBetweenEntries;
+        }
+    }
+
+    // Getters
+    public GameObject GetArrayAtZ(int z)
+    {
+        return array[z];
+    }
+    public int Length()
+    {
+        return array.Length;
+    }
+
+    public void UnHighlightAll()
+    {
+        foreach(GameObject da2d in array)
+        {
+            da2d.GetComponent<DataArray2D>().UnHighlightAll();
         }
     }
 }

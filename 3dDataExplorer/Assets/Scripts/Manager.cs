@@ -49,6 +49,7 @@ public class Manager : MonoBehaviour
     {
         Raycast();
         ReactToClick();
+        ReactToMouseWheel();
     }
 
     public void Raycast()
@@ -180,6 +181,19 @@ public class Manager : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void ReactToMouseWheel()
+    {
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            Manager.offsetBetweenEntries += 1;
+            mainArray3d.GetComponent<DataArray3D>().UpdateDistanceBetweenData();
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            Manager.offsetBetweenEntries = Mathf.Max(1f, Manager.offsetBetweenEntries - 1);
+            mainArray3d.GetComponent<DataArray3D>().UpdateDistanceBetweenData();
+        }
     }
 }

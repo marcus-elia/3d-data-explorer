@@ -58,6 +58,29 @@ public class DataArray2D : MonoBehaviour
         }
     }
 
+    // This should be called whenever Manager.offsetBetweenEntries changes
+    public void UpdateDistanceBetweenData()
+    {
+        // Calculate where to put the top array
+        float curDataLoc;
+        if (array.Length % 2 == 0)
+        {
+            curDataLoc = Manager.offsetBetweenEntries * (array.Length / 2f - 0.5f);
+        }
+        else
+        {
+            curDataLoc = Manager.offsetBetweenEntries * (array.Length / 2f - 0.5f);
+        }
+
+        // Put all of the data in the correct positions and initialize them
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i].transform.localPosition = new Vector3(0, curDataLoc, 0);
+            array[i].GetComponent<DataArray1D>().UpdateDistanceBetweenData();
+            curDataLoc -= Manager.offsetBetweenEntries;
+        }
+    }
+
     public GameObject GetArrayAtY(int y)
     {
         return array[y];

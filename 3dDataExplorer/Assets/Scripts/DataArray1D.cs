@@ -78,4 +78,26 @@ public class DataArray1D : MonoBehaviour
             dp.GetComponent<DataPolyhedron>().UnHighlight();
         }
     }
+
+    // This should be called whenever Manager.offsetBetweenEntries changes
+    public void UpdateDistanceBetweenData()
+    {
+        // Calculate where to put the leftmost data
+        float curDataLoc;
+        if (array.Length % 2 == 0)
+        {
+            curDataLoc = -Manager.offsetBetweenEntries * (array.Length / 2f - 0.5f);
+        }
+        else
+        {
+            curDataLoc = -Manager.offsetBetweenEntries * (array.Length / 2f - 0.5f);
+        }
+
+        // Put all of the data in the correct positions
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i].transform.localPosition = new Vector3(curDataLoc, 0, 0);
+            curDataLoc += Manager.offsetBetweenEntries;
+        }
+    }
 }

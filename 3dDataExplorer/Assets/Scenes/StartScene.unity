@@ -3356,7 +3356,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -160, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1734515296
 MonoBehaviour:
@@ -3721,7 +3721,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -160, y: -120}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1881092553
 MonoBehaviour:
@@ -3814,6 +3814,8 @@ MonoBehaviour:
     - m_Text: Sphere
       m_Image: {fileID: 0}
     - m_Text: Cube
+      m_Image: {fileID: 0}
+    - m_Text: Tetrahedron
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

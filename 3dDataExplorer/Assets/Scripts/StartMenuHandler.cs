@@ -58,8 +58,11 @@ public class StartMenuHandler : MonoBehaviour
             case 0:
                 StartMenuHandler.shapeType = ShapeType.Sphere;
                 break;
-            default:
+            case 1:
                 StartMenuHandler.shapeType = ShapeType.Cube;
+                break;
+            default:
+                StartMenuHandler.shapeType = ShapeType.Tetrahedron;
                 break;
         }
     }

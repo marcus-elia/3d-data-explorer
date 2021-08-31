@@ -74,13 +74,18 @@ public class DataPolyhedron : MonoBehaviour
     {
         shell = Instantiate(shapePrefab);
         shell.transform.SetParent(transform);
-        if(!Manager.proBuilder)
+        if(StartMenuHandler.shapeType == ShapeType.Cube)
         {
             shell.transform.localPosition = Vector3.zero;
-        }
-        else // The probuilder solids aren't centered. Why is this the right offset? Idk
+        } 
+        // The probuilder solids aren't centered. Why is this the right offset? Idk
+        else if(StartMenuHandler.shapeType == ShapeType.Sphere)
         {
-            shell.transform.localPosition = new Vector3(1.5f, -1f, -1.25f);
+            shell.transform.localPosition = new Vector3(1.8f, -1.2f, -1.45f);
+        }
+        else // Tetrahedron
+        {
+            shell.transform.localPosition = new Vector3(-2.5f, 2.25f, 4f);
         }
         shell.GetComponent<Renderer>().material = normalMat;
 

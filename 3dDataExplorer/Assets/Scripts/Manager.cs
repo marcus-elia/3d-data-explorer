@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShapeType { Cube, Sphere };
+public enum ShapeType { Cube, Sphere, Tetrahedron };
 
 public class Manager : MonoBehaviour
 {
@@ -15,9 +15,7 @@ public class Manager : MonoBehaviour
     // The shells
     public GameObject cubePrefab;
     public GameObject spherePrefab;
-    // Keep track of whether we are using a ProBuilder solid. Those need offsetting
-    // because they aren't centered properly
-    public static bool proBuilder;
+    public GameObject tetrahedronPrefab;
 
     // Need the camera for raycasting
     public new Camera camera;
@@ -53,12 +51,14 @@ public class Manager : MonoBehaviour
         if(StartMenuHandler.shapeType == ShapeType.Sphere)
         {
             chosenShellPrefab = spherePrefab;
-            proBuilder = true;
+        }
+        else if(StartMenuHandler.shapeType == ShapeType.Cube)
+        {
+            chosenShellPrefab = cubePrefab;
         }
         else
         {
-            chosenShellPrefab = cubePrefab;
-            proBuilder = false;
+            chosenShellPrefab = tetrahedronPrefab;
         }
 
         // Create the object
@@ -92,6 +92,14 @@ public class Manager : MonoBehaviour
                 dp.Hover();
             }
             hovered = dp;
+        }
+        else
+        {
+            if (hovered != null && !hovered.IsHighlighted())
+            {
+                hovered.UnHighlight();
+                hovered = null;
+            }
         }
     }
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ShapeType { Cube, Sphere };
+
 public class Manager : MonoBehaviour
 {
     public static float HIGHLIGHT_LINE_TOLERANCE = 0.01f;
@@ -46,10 +48,23 @@ public class Manager : MonoBehaviour
 
         Data[][][] triangles = DataCreator.MakeTriangleData(10, 6);
 
+        // Figure out which shape the user chose
+        GameObject chosenShellPrefab;
+        if(StartMenuHandler.shapeType == ShapeType.Sphere)
+        {
+            chosenShellPrefab = spherePrefab;
+            proBuilder = true;
+        }
+        else
+        {
+            chosenShellPrefab = cubePrefab;
+            proBuilder = false;
+        }
+
+        // Create the object
         mainArray3d = new GameObject();
         mainArray3d.AddComponent<DataArray3D>();
-        proBuilder = true;
-        mainArray3d.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, spherePrefab);
+        mainArray3d.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, chosenShellPrefab);
     }
 
     // Update is called once per frame

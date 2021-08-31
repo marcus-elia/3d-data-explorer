@@ -37,7 +37,7 @@ public class Manager : MonoBehaviour
         sampleData[1] = new Data[4] { new Data(111), new Data(67), new Data(-9.8f), new Data("hey") };
         sampleData[2] = new Data[1] { new Data(3.14f) };
 
-        Data[][][] triangles = DataCreator.MakeTriangleData(6, 5);
+        Data[][][] triangles = DataCreator.MakeTriangleData(10, 6);
 
         mainArray3d = new GameObject();
         mainArray3d.AddComponent<DataArray3D>();

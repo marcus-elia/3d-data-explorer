@@ -59,7 +59,6 @@ public class DataText : MonoBehaviour
 
     private int fontSize;
     private int numCharacters;
-    private static float maxTextWidth = 0.9f;
 
     private Transform playerTransform;
 
@@ -101,9 +100,18 @@ public class DataText : MonoBehaviour
         {
             text.fontSize = 5;
         }
-        else
+        else if(numCharacters == 5)
         {
             text.fontSize = 4;
+        }
+        else if(numCharacters == 6)
+        {
+            text.fontSize = 3;
+        }
+        else
+        {
+            text.text = dataString.Substring(0, 3) + "...";
+            text.fontSize = 3;
         }
     }
 

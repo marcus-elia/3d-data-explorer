@@ -156,6 +156,7 @@ MonoBehaviour:
   hoverMat: {fileID: 2100000, guid: ad2a96c5271f6fe49a0e67b9ee80b933, type: 2}
   highlightMat: {fileID: 2100000, guid: 92daaa4870b0f0e45a68b1f1bf3f35d9, type: 2}
   cubePrefab: {fileID: 9101842642606899036, guid: 0178ab2c41c9f59449ff84b3351bfc19, type: 3}
+  spherePrefab: {fileID: 6134288061310023934, guid: bff677abd2ab65c459208484e3cf84a0, type: 3}
   camera: {fileID: 963194227}
 --- !u!4 &695889436
 Transform:

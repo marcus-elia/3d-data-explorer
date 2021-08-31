@@ -74,7 +74,14 @@ public class DataPolyhedron : MonoBehaviour
     {
         shell = Instantiate(shapePrefab);
         shell.transform.SetParent(transform);
-        shell.transform.localPosition = Vector3.zero;
+        if(!Manager.proBuilder)
+        {
+            shell.transform.localPosition = Vector3.zero;
+        }
+        else // The probuilder solids aren't centered. Why is this the right offset? Idk
+        {
+            shell.transform.localPosition = new Vector3(1.5f, -1f, -1.25f);
+        }
         shell.GetComponent<Renderer>().material = normalMat;
 
         // This is the hack to get the DataPolyhedron when a raycast hits the prefab's collider

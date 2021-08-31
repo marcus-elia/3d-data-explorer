@@ -9,7 +9,14 @@ public class Manager : MonoBehaviour
     public Material normalMat;
     public Material hoverMat;
     public Material highlightMat;
+
+    // The shells
     public GameObject cubePrefab;
+    public GameObject spherePrefab;
+    // Keep track of whether we are using a ProBuilder solid. Those need offsetting
+    // because they aren't centered properly
+    public static bool proBuilder;
+
     // Need the camera for raycasting
     public new Camera camera;
 
@@ -41,7 +48,8 @@ public class Manager : MonoBehaviour
 
         mainArray3d = new GameObject();
         mainArray3d.AddComponent<DataArray3D>();
-        mainArray3d.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, cubePrefab);
+        proBuilder = true;
+        mainArray3d.GetComponent<DataArray3D>().InitializeData(triangles, normalMat, hoverMat, highlightMat, spherePrefab);
     }
 
     // Update is called once per frame

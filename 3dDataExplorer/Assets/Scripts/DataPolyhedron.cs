@@ -81,7 +81,7 @@ public class DataPolyhedron : MonoBehaviour
         // The probuilder solids aren't centered. Why is this the right offset? Idk
         else if(StartMenuHandler.shapeType == ShapeType.Sphere)
         {
-            shell.transform.localPosition = new Vector3(1.8f, -1.2f, -1.45f);
+            shell.transform.localPosition = new Vector3(1.9f, -1.2f, -1.45f);
         }
         else // Tetrahedron
         {

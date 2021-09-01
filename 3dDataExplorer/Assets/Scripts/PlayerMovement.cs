@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float speed = 4f;
+    public static float speed = 4f;
 
     // Update is called once per frame
     void Update()
@@ -41,5 +41,10 @@ public class PlayerMovement : MonoBehaviour
         {
             controller.Move(move * speed * Time.deltaTime);
         }
+    }
+
+    public static void ResetSpeed()
+    {
+        PlayerMovement.speed = 4f;
     }
 }

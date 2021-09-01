@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ShapeType { Cube, Sphere, Tetrahedron };
+public enum DataAmount { Little, Normal, Lot, TooMuch };
 
 public class Manager : MonoBehaviour
 {
@@ -44,7 +45,28 @@ public class Manager : MonoBehaviour
         sampleData[1] = new Data[4] { new Data(111), new Data(67), new Data(-9.8f), new Data("hey") };
         sampleData[2] = new Data[1] { new Data(3.14f) };
 
-        Data[][][] triangles = DataCreator.MakeTriangleData(10, 6);
+        // Make the dataset based on how much data the user chose
+        int b, n;
+        switch(StartMenuHandler.dataAmount)
+        {
+            case DataAmount.Little:
+                b = 5;
+                n = 5;
+                break;
+            case DataAmount.Normal:
+                b = 10;
+                n = 6;
+                break;
+            case DataAmount.Lot:
+                b = 20;
+                n = 10;
+                break;
+            default:
+                b = 30;
+                n = 15;
+                break;
+        }
+        Data[][][] triangles = DataCreator.MakeTriangleData(b, n);
 
         // Figure out which shape the user chose
         GameObject chosenShellPrefab;
@@ -219,11 +241,13 @@ public class Manager : MonoBehaviour
         if(Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
             Manager.offsetBetweenEntries += 1;
+            PlayerMovement.speed += 1;
             mainArray3d.GetComponent<DataArray3D>().UpdateDistanceBetweenData();
         }
         else if(Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             Manager.offsetBetweenEntries = Mathf.Max(1f, Manager.offsetBetweenEntries - 1);
+            PlayerMovement.speed = Mathf.Max(3f, PlayerMovement.speed - 1);
             mainArray3d.GetComponent<DataArray3D>().UpdateDistanceBetweenData();
         }
     }

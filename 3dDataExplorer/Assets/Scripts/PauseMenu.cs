@@ -54,6 +54,12 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        // Reset static variables
+        Manager.offsetBetweenEntries = 2f;
+        StartMenuHandler.ResetDefaults();
+        PlayerMovement.ResetSpeed();
+
+        // Switch to main menu
         SceneManager.LoadScene("StartScene");
     }
 

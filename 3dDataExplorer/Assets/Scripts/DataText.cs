@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum DataType { Int, Float, String };
+public enum DataType { Int, Float, String, Long };
 
 public struct Data
 {
     public int intData;
     public float floatData;
     public string stringData;
+    public long longData;
     public DataType dataType;
 
     public Data(int input)
@@ -17,6 +18,7 @@ public struct Data
         intData = input;
         floatData = 0f;
         stringData = null;
+        longData = 0;
         dataType = DataType.Int;
     }
     public Data(float input)
@@ -24,6 +26,7 @@ public struct Data
         intData = 0;
         floatData = input;
         stringData = null;
+        longData = 0;
         dataType = DataType.Float;
     }
     public Data(string input)
@@ -31,7 +34,17 @@ public struct Data
         intData = 0;
         floatData = 0f;
         stringData = input;
+        longData = 0;
         dataType = DataType.String;
+    }
+
+    public Data(long input)
+    {
+        intData = 0;
+        floatData = 0f;
+        stringData = "";
+        longData = input;
+        dataType = DataType.Long;
     }
 
     public string GetString()
@@ -43,6 +56,10 @@ public struct Data
         else if(dataType == DataType.Float)
         {
             return floatData.ToString();
+        }
+        else if(dataType == DataType.Long)
+        {
+            return longData.ToString();
         }
         else
         {
@@ -108,10 +125,14 @@ public class DataText : MonoBehaviour
         {
             text.fontSize = 3;
         }
+        else if(numCharacters == 7)
+        {
+            text.fontSize = 2.5f;
+        }
         else
         {
-            text.text = dataString.Substring(0, 3) + "...";
-            text.fontSize = 3;
+            text.text = dataString.Substring(0, 4) + "...";
+            text.fontSize = 2.5f;
         }
     }
 

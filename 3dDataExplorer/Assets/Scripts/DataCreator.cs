@@ -38,7 +38,7 @@ public class DataCreator : MonoBehaviour
         return array3d;
     }
 
-    public static int T(int b, int n, int k)
+    public static long T(int b, int n, int k)
     {
         if(n < 1 || k < 1 || k > n)
         {

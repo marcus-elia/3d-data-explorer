@@ -9,8 +9,10 @@ public class StartMenuHandler : MonoBehaviour
 {
     public static AudioChoice audioChoice = AudioChoice.Normal;
     public static ShapeType shapeType = ShapeType.Sphere;
+    public static DataAmount dataAmount = DataAmount.Little;
     public TMP_Dropdown musicDropdown;
     public TMP_Dropdown shapeDropdown;
+    public TMP_Dropdown dataAmountDropdown;
     public GameObject mainMenuPanel;
     public GameObject instructionsPanel;
 
@@ -20,12 +22,14 @@ public class StartMenuHandler : MonoBehaviour
         mainMenuPanel.SetActive(true);
         instructionsPanel.SetActive(false);
 
-        // Add listener for when the value of the Dropdown changes, to take action
         musicDropdown.onValueChanged.AddListener(delegate {
             MusicDropdownValueChanged(musicDropdown);
         });
         shapeDropdown.onValueChanged.AddListener(delegate {
             ShapeDropdownValueChanged(shapeDropdown);
+        });
+        dataAmountDropdown.onValueChanged.AddListener(delegate {
+            DataAmountDropdownValueChanged(dataAmountDropdown);
         });
     }
 
@@ -65,6 +69,32 @@ public class StartMenuHandler : MonoBehaviour
                 StartMenuHandler.shapeType = ShapeType.Tetrahedron;
                 break;
         }
+    }
+
+    public void DataAmountDropdownValueChanged(TMP_Dropdown change)
+    {
+        switch (change.value)
+        {
+            case 0:
+                StartMenuHandler.dataAmount = DataAmount.Little;
+                break;
+            case 1:
+                StartMenuHandler.dataAmount = DataAmount.Normal;
+                break;
+            case 2:
+                StartMenuHandler.dataAmount = DataAmount.Lot;
+                break;
+            default:
+                StartMenuHandler.dataAmount = DataAmount.TooMuch;
+                break;
+        }
+    }
+
+    public static void ResetDefaults()
+    {
+        StartMenuHandler.dataAmount = DataAmount.Little;
+        StartMenuHandler.audioChoice = AudioChoice.Normal;
+        StartMenuHandler.shapeType = ShapeType.Sphere;
     }
 
     public void SwitchToInstructions()
